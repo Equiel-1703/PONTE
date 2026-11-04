@@ -1,0 +1,11 @@
+/* 1. Root container styling (applies to the top-level VBox and cascades fonts) */
+.root {
+    -fx-background-color: #1e1e2e;
+    -fx-font-family: "SansSerif";
+    -fx-font-size: 14px;
+}
+
+/* 2. All Labels by default */
+.label {
+    -fx-text-fill: #cdd6f4;
+}

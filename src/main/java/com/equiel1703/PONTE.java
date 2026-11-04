@@ -11,11 +11,12 @@ public class PONTE extends Application {
 
   @Override
   public void start(Stage stage) throws IOException {
-    // Loads /com/equiel1703/main-view.fxml from the classpath/JAR
-    FXMLLoader loader = new FXMLLoader(PONTE.class.getResource("main-view.fxml"));
-    Parent root = loader.load();
-
+    Parent root = FXMLLoader.load(getClass().getResource("main-gui.fxml"));
     Scene scene = new Scene(root, 640, 480);
+
+    // Adding stylesheet to main GUI
+    scene.getStylesheets().add(getClass().getResource("main-gui.css").toExternalForm());
+
     stage.setTitle("PONTE");
     stage.setScene(scene);
     stage.show();
