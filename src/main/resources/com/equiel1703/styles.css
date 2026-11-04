@@ -1,0 +1,50 @@
+/* 1. Root container styling (applies to the top-level VBox and cascades fonts) */
+.root {
+    -fx-background-color: #1e1e2e;
+    -fx-font-family: "SansSerif";
+    -fx-font-size: 14px;
+}
+
+/* 2. All Labels by default */
+.label {
+    -fx-text-fill: #cdd6f4;
+}
+
+/* 3. Custom class for the header */
+.title-label {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #89b4fa;
+}
+
+/* 4. Custom class for a card/panel container */
+.info-card {
+    -fx-background-color: #313244;
+    -fx-background-radius: 8px;
+    -fx-padding: 16px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 10, 0, 0, 4);
+}
+
+/* 5. Targeting a specific component by its fx:id */
+#statusLabel {
+    -fx-font-family: "Monospaced";
+    -fx-text-fill: #a6e3a1;
+}
+
+/* 6. Styling Buttons + Pseudo-classes (:hover, :pressed) */
+.action-button {
+    -fx-background-color: #89b4fa;
+    -fx-text-fill: #11111b;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 20px;
+    -fx-cursor: hand;
+}
+
+.action-button:hover {
+    -fx-background-color: #b4befe;
+}
+
+.action-button:pressed {
+    -fx-background-color: #74c7ec;
+}
