@@ -1,10 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.Double?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Cylinder?>
+<?import javafx.scene.shape.Polygon?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="606.0" text="Olá mundo!" textAlignment="CENTER" />
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="606.0" text="PONTE - Proxy for Older Nodes in ubiquiTous Environments" textAlignment="CENTER" />
+      <TabPane tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab closable="false" text="Network Interface Scanner">
+               <content>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="600.0" vbarPolicy="NEVER">
+                     <content>
+                        <HBox alignment="CENTER_LEFT" fillHeight="false">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="80.0" stroke="BLACK" strokeType="INSIDE" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </HBox>
+                     </content>
+                  </ScrollPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Polygon fill="DODGERBLUE" stroke="BLACK" strokeType="INSIDE">
+              <points>
+                <Double fx:value="-50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="0.0" />
+                <Double fx:value="-60.0" />
+              </points>
+            </Polygon>
+            <Label text="Middleware Status" />
+         </children>
+      </HBox>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <tabs>
+          <Tab text="Services">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Cylinder height="100" layoutX="182.0" layoutY="95.0" radius="20" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab text="Clients">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </VBox>
