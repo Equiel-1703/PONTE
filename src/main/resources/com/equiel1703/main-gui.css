@@ -219,7 +219,6 @@
     -fx-border-width: 2px, 2px;
     -fx-border-insets: 0, 2;
     -fx-padding: 4px;
-    -fx-cursor: hand;
 }
 
 #NetworkInterfacesScrollPane .scroll-bar .increment-button:pressed,
