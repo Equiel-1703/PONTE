@@ -2,7 +2,6 @@ package com.equiel1703;
 
 import java.io.IOException;
 
-import com.equiel1703.urls.CSS;
 import com.equiel1703.urls.FXMLS;
 
 import javafx.application.Application;
@@ -36,9 +35,6 @@ public class PONTE extends Application {
     // Now we can create the scene from the FXML
     Parent root = FXMLLoader.load(FXMLS.MAIN_GUI.getUrl());
     Scene scene = new Scene(root);
-
-    // Adding main GUI CSS
-    scene.getStylesheets().add(CSS.MAIN_GUI.getUrl().toExternalForm());
 
     stage.setWidth(WINDOW_WIDTH);
     stage.setHeight(WINDOW_HEIGHT);
