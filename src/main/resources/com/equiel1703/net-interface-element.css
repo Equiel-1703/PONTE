@@ -1,0 +1,30 @@
+#NetIntRoot {
+    -bg-color: #323A5C;
+
+    -fx-background-color: -bg-color;
+
+    -fx-font-family: "VT323";
+    -fx-font-size: 24px;
+    -fx-font-smoothing-type: gray;
+
+    -fx-border-color: #9fa3b1 #282d44 #282d44 #9fa3b1;;
+    -fx-border-width: 3px;
+}
+
+#NetIntName {
+    -fx-font-size: 38px;
+    -fx-text-fill: #b1ff68;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8) , 5.0, 0.5, 0, 0)
+}
+
+.netIntPropertyName {
+    -fx-font-size: 30px;
+    -fx-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8) , 5.0, 0.5, 0, 0)
+}
+
+.netIntPropertyValue {
+    -fx-font-size: 30px;
+    -fx-fill: #d7bf37;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8) , 5.0, 0.5, 0, 0)
+}

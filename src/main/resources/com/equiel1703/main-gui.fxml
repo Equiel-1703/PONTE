@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Cylinder?>
 <?import javafx.scene.shape.Polygon?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" stylesheets="@main-gui.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" stylesheets="@main-gui.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.equiel1703.controllers.MainGuiController">
    <children>
       <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0" spacing="20.0" VBox.vgrow="NEVER">
          <children>
@@ -39,10 +39,10 @@
                <content>
                   <VBox spacing="8.0">
                      <children>
-                        <Button fx:id="ScanInterfacesButton" mnemonicParsing="false" styleClass="steelButton" text="[ ↻ Scan Interfaces ]" />
-                        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+                        <Button fx:id="ScanInterfacesButton" mnemonicParsing="false" onAction="#onScanClick" styleClass="steelButton" text="[ ↻ Scan Interfaces ]" />
+                        <ScrollPane fx:id="NetworkInterfacesScrollPane" fitToHeight="true" fitToWidth="true" prefHeight="150.0" prefWidth="200.0" vbarPolicy="NEVER">
                            <content>
-                              <HBox fx:id="NetworkInterfacesHBox" prefHeight="100.0" prefWidth="200.0" />
+                              <HBox fx:id="NetworkInterfacesHBox" prefHeight="150.0" prefWidth="200.0" spacing="10.0" />
                            </content>
                         </ScrollPane>
                      </children>

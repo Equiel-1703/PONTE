@@ -1,5 +1,6 @@
 .root {
     -bg-color: #0e1329;
+    -scroll-thumb: #394657;
 
     -tab-h: 40px;
     -tab-small-w: 128px;
@@ -151,4 +152,85 @@
     -fx-border-image-source: url("imgs/button-pressed.png");
 
     -fx-translate-y: 4px;
+}
+
+/* ---------- Network Interface Section ---------- */
+
+#NetworkInterfacesHBox {
+    -fx-background-color: transparent;
+}
+
+#NetworkInterfacesScrollPane .viewport {
+    -fx-background-color: transparent;
+}
+
+#NetworkInterfacesScrollPane {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+#NetworkInterfacesScrollPane .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-height: 16px;
+    -fx-padding: 0;
+}
+
+#NetworkInterfacesScrollPane .scroll-bar .track {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: #05070e #283246 #283246 #05070e;
+    -fx-border-width: 2px;
+}
+
+#NetworkInterfacesScrollPane .scroll-bar .thumb {
+    -fx-background-color: -scroll-thumb;
+    -fx-background-insets: 2;
+    -fx-background-radius: 0;
+
+    -fx-border-color:
+        #05070e,
+        #eef3fa #465063 #465063 #eef3fa;
+    -fx-border-width: 2px, 2px;
+    -fx-border-insets: 0, 2;
+    -fx-border-radius: 0;
+}
+
+#NetworkInterfacesScrollPane .scroll-bar .thumb:hover {
+    -fx-background-color: #99a5bc;
+}
+
+#NetworkInterfacesScrollPane .scroll-bar .thumb:pressed {
+    -fx-background-color: #747f94;
+    -fx-border-color:
+        #05070e,
+        #465063 #eef3fa #eef3fa #465063;
+}
+
+#NetworkInterfacesScrollPane .scroll-bar .increment-button,
+#NetworkInterfacesScrollPane .scroll-bar .decrement-button {
+    -fx-background-color: -scroll-thumb;
+    -fx-background-insets: 2;
+    -fx-background-radius: 0;
+    -fx-border-color:
+        #05070e,
+        #eef3fa #465063 #465063 #eef3fa;
+    -fx-border-width: 2px, 2px;
+    -fx-border-insets: 0, 2;
+    -fx-padding: 4px;
+    -fx-cursor: hand;
+}
+
+#NetworkInterfacesScrollPane .scroll-bar .increment-button:pressed,
+#NetworkInterfacesScrollPane .scroll-bar .decrement-button:pressed {
+    -fx-border-color:
+        #05070e,
+        #465063 #eef3fa #eef3fa #465063;
+}
+
+#NetworkInterfacesScrollPane .scroll-bar .increment-arrow,
+#NetworkInterfacesScrollPane .scroll-bar .decrement-arrow {
+    -fx-background-color: #05070e;
+    -fx-padding: 3px 2px 4px 3px;
 }
