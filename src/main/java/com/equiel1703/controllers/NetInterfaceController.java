@@ -5,6 +5,7 @@ import com.equiel1703.urls.NetInterfaceIcon;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -23,6 +24,9 @@ public class NetInterfaceController {
 
   @FXML
   private Text NetIntMask;
+
+  @FXML 
+  private Tooltip NetIntTooltip;
 
   public void setInterfaceData(NetworkIF netInt) {
     Image icon;
@@ -45,5 +49,6 @@ public class NetInterfaceController {
     this.NetIntName.setText(netInt.getName());
     this.NetIntIP.setText(netInt.getIPv4addr()[0]);
     this.NetIntMask.setText(NetUtils.cidrToNetmask(netInt.getSubnetMasks()[0]));
+    this.NetIntTooltip.setText(netInt.getDisplayName());
   }
 }

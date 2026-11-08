@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -17,7 +18,10 @@
          </image></ImageView>
       <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
          <children>
-            <Label fx:id="NetIntName" text="eth0" />
+            <Label fx:id="NetIntName" text="eth0">
+               <tooltip>
+                  <Tooltip fx:id="NetIntTooltip" text="Empty Tooltip" wrapText="true" />
+               </tooltip></Label>
             <TextFlow prefWidth="200.0" VBox.vgrow="NEVER">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="netIntPropertyName" text="IP:" />

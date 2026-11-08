@@ -28,3 +28,8 @@
     -fx-fill: #d7bf37;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8) , 5.0, 0.5, 0, 0)
 }
+
+/* Interface Tooltip */
+.tooltip {
+    -fx-font-size: 18px;
+}
