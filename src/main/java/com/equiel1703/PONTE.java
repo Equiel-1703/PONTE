@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class PONTE extends Application {
   private final double WINDOW_WIDTH = 800;
-  private final double WINDOW_HEIGHT = 800;
+  private final double WINDOW_HEIGHT = 820;
 
   private void loadFonts() {
     Font VT323_regular = Font.loadFont(

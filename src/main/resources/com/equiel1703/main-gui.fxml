@@ -7,6 +7,8 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -15,20 +17,32 @@
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" stylesheets="@main-gui.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" text="PONTE - Proxy for Older Nodes in ubiquiTous Environments" textAlignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0" spacing="20.0" VBox.vgrow="NEVER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imgs/PONTE-LOGO-TEXT.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" text="Proxy for Older Nodes in ubiquiTous Environments" textAlignment="CENTER" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
          <VBox.margin>
-            <Insets bottom="10.0" top="10.0" />
-         </VBox.margin></Label>
-      <TabPane fx:id="NetInterfaceScannerTabPane" tabClosingPolicy="UNAVAILABLE">
+            <Insets />
+         </VBox.margin>
+      </HBox>
+      <TabPane tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="NetInterfaceTab" closable="false" text="Network Interface Scanner">
                <content>
-                  <VBox>
+                  <VBox spacing="8.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Scan Interfaces" />
+                        <Button fx:id="ScanInterfacesButton" mnemonicParsing="false" styleClass="steelButton" text="[ ↻ Scan Interfaces ]" />
                         <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
                            <content>
-                              <HBox prefHeight="100.0" prefWidth="200.0" />
+                              <HBox fx:id="NetworkInterfacesHBox" prefHeight="100.0" prefWidth="200.0" />
                            </content>
                         </ScrollPane>
                      </children>
@@ -37,7 +51,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <HBox fx:id="MiddlewareStatusHBox" prefHeight="150.0" prefWidth="200.0">
+      <HBox fx:id="MiddlewareStatusHBox" alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0">
          <children>
             <Polygon fill="DODGERBLUE" stroke="BLACK" strokeType="INSIDE">
               <points>
@@ -52,13 +66,13 @@
             <Label text="Middleware Status" />
          </children>
       </HBox>
-      <TabPane fx:id="ServicesClientsTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
         <tabs>
           <Tab styleClass="smallTabs" text="Services">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Cylinder height="100" layoutX="182.0" layoutY="95.0" radius="20" />
+                        <Cylinder height="100" layoutX="186.0" layoutY="77.0" radius="20" />
                      </children>
                   </AnchorPane>
                </content>

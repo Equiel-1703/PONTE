@@ -5,6 +5,8 @@
     -tab-small-w: 128px;
     -tab-large-w: 300px;
 
+    -gui-padding: 8px;
+
     -fx-background-color: -bg-color;
     -fx-font-family: "VT323";
     -fx-font-size: 24px;
@@ -123,4 +125,30 @@
     -fx-border-image-insets: 0; /* Keep at 0 so TabPaneSkin doesn't clip the top border! */
     -fx-border-image-repeat: stretch;
     -fx-padding: 8px;
+}
+
+/* ---------- Steel Button ---------- */
+
+.steelButton {
+    -fx-background-color: transparent;
+    -fx-border-image-source: url("imgs/button.png");
+    -fx-border-image-slice: 5 5 5 5 fill;
+    -fx-border-image-width: 5 5 5 5;
+    -fx-border-image-insets: 0;
+    -fx-border-image-repeat: stretch;
+    -fx-padding: 8px;
+
+    -fx-cursor: hand;
+}
+
+/* Hover state: slightly brighten the steel scanlines */
+.steelButton:hover {
+    -fx-text-fill: #efef80;
+}
+
+/* Pressed state */
+.steelButton:pressed {
+    -fx-border-image-source: url("imgs/button-pressed.png");
+
+    -fx-translate-y: 4px;
 }
