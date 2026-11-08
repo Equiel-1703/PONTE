@@ -18,6 +18,7 @@ public class MainGuiController {
   @FXML
   private HBox NetworkInterfacesHBox;
 
+  // Called when the user clicks the "Scan Interfaces" button
   public void onScanClick(ActionEvent e) {
     System.out.println("Scanning Network Interfaces...");
 
@@ -30,17 +31,17 @@ public class MainGuiController {
       try {
         FXMLLoader netInterfaceUiLoader = new FXMLLoader(FXMLS.NET_INTERFACE_ELEMENT.getUrl());
 
-        Node netInterfaceRoot = netInterfaceUiLoader.load();
+        Node netInterfaceNode = netInterfaceUiLoader.load();
         NetInterfaceController controller = netInterfaceUiLoader.getController();
 
-        controller.setInterfaceData("teste", "10.0.0.1", "255.255.255.0");
+        controller.setInterfaceData(n);
 
-        NetworkInterfacesHBox.getChildren().add(netInterfaceRoot);
+        NetworkInterfacesHBox.getChildren().add(netInterfaceNode);
       } catch (IOException e1) {
         e1.printStackTrace();
       }
     }
 
-    System.out.println("Scanning Done.");
+    System.out.println("- Scanning Done -");
   }
 }
