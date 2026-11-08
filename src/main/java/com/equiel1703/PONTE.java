@@ -1,6 +1,10 @@
 package com.equiel1703;
 
 import java.io.IOException;
+
+import com.equiel1703.urls.CSS;
+import com.equiel1703.urls.FXMLS;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +16,7 @@ public class PONTE extends Application {
   private final double WINDOW_WIDTH = 800;
   private final double WINDOW_HEIGHT = 820;
 
+  // Load custom fonts from resources folder
   private void loadFonts() {
     Font VT323_regular = Font.loadFont(
       getClass().getResourceAsStream("fonts/VT323-Regular.ttf"),
@@ -25,13 +30,15 @@ public class PONTE extends Application {
 
   @Override
   public void start(Stage stage) throws IOException {
+    // First, we load our custom fonts
     loadFonts();
 
-    Parent root = FXMLLoader.load(getClass().getResource("main-gui.fxml"));
+    // Now we can create the scene from the FXML
+    Parent root = FXMLLoader.load(FXMLS.MAIN_GUI.getUrl());
     Scene scene = new Scene(root);
 
-    // Adding stylesheet to main GUI
-    scene.getStylesheets().add(getClass().getResource("main-gui.css").toExternalForm());
+    // Adding main GUI CSS
+    scene.getStylesheets().add(CSS.MAIN_GUI.getUrl().toExternalForm());
 
     stage.setWidth(WINDOW_WIDTH);
     stage.setHeight(WINDOW_HEIGHT);

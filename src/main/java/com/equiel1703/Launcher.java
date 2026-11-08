@@ -2,7 +2,7 @@ package com.equiel1703;
 
 public class Launcher {
   public static void main(String[] args) {
-    // -- These settings here are to help the fonts and shapes to have a 'retro' feel --
+    // -- These settings here are to help the fonts and shapes to have a sharp 'retro' feel --
 
     // Disable RGB subpixel antialiasing
     System.setProperty("prism.lcdtext", "false");
