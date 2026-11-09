@@ -1,14 +1,26 @@
 #NetIntRoot {
     -bg-color: #323A5C;
-
-    -fx-background-color: -bg-color;
+    -active-bg-color: #555f8d;
 
     -fx-font-family: "VT323";
     -fx-font-size: 24px;
     -fx-font-smoothing-type: gray;
+    
+    -fx-cursor: hand;
+}
+
+.netInterface {
+    -fx-background-color: -bg-color;
 
     -fx-border-color: #9fa3b1 #282d44 #282d44 #9fa3b1;;
     -fx-border-width: 3px;
+}
+
+.netInterface:active {
+    -fx-background-color: -active-bg-color !important;
+
+    -fx-border-color: #9ff698 !important;
+    -fx-border-width: 4px !important;
 }
 
 #NetIntName {

@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<HBox fx:id="NetIntRoot" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="410.0" spacing="15.0" stylesheets="@net-interface-element.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.equiel1703.controllers.NetInterfaceController">
+<HBox fx:id="NetIntRoot" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClicked" prefHeight="125.0" prefWidth="410.0" spacing="15.0" styleClass="netInterface" stylesheets="@net-interface-element.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.equiel1703.controllers.NetInterfaceController">
    <children>
       <ImageView fx:id="NetIntIcon" fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" smooth="false">
          <image>
