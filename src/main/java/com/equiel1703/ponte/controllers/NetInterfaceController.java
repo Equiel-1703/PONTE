@@ -4,6 +4,7 @@ import com.equiel1703.ponte.net.NetUtils;
 import com.equiel1703.ponte.singletons.AppState;
 import com.equiel1703.ponte.urls.NetInterfaceIcon;
 
+import javafx.beans.value.ChangeListener;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -19,25 +20,25 @@ import oshi.hardware.NetworkIF;
 public class NetInterfaceController {
   // The network interface this node is controlling
   private NetworkIF netInt;
-
   // The active state pseudo-class of the Network Interfaces
   private static final PseudoClass ACTIVE_PSEUDO_CLASS = PseudoClass.getPseudoClass("active");
+  // The change listener that detects when a UI inteerface element should enter
+  // the "active" state
+  private final ChangeListener<NetworkIF> activeInterfaceChangeListener = (observable, oldValue, newValue) -> {
+    boolean active = this.netInt.getName() == newValue.getName();
+    this.NetIntRoot.pseudoClassStateChanged(ACTIVE_PSEUDO_CLASS, active);
+  };
 
   @FXML
   private HBox NetIntRoot;
-
   @FXML
   private ImageView NetIntIcon;
-
   @FXML
   private Label NetIntName;
-
   @FXML
   private Text NetIntIP;
-
   @FXML
   private Text NetIntMask;
-
   @FXML
   private Tooltip NetIntTooltip;
 
@@ -70,27 +71,25 @@ public class NetInterfaceController {
     AppState
         .getInstance()
         .getActiveInterfaceProperty()
-        .addListener(
-            (observable, oldValue, newValue) -> {
-              /*
-               * The network interface root node will enter the "active" state when the
-               * clicked interface by the user is the same as the one controlled by this
-               * node.
-               */
-              boolean active = this.netInt.getName() == newValue.getName();
-              this.NetIntRoot.pseudoClassStateChanged(ACTIVE_PSEUDO_CLASS, active);
-            });
+        .addListener(this.activeInterfaceChangeListener);
   }
 
   // Called when the user clicks in the interface
   public void onClicked(MouseEvent e) {
     System.out.println("The user clicked on " + this.netInt.getName());
 
-    AppState appState = AppState.getInstance();
-    appState.setActiveInterface(this.netInt);
+    AppState
+        .getInstance()
+        .setActiveInterface(this.netInt);
+  }
+
+  // Called by the MainGUI when we want to get rid of this controller.
+  // We have to remote the listener from the AppState active interface property so it
+  // doesn't leak
+  public void dispose() {
+    AppState
+        .getInstance()
+        .getActiveInterfaceProperty()
+        .removeListener(this.activeInterfaceChangeListener);
   }
 }
-
-// TODO: I have to check for Listener leaks. When we remove interface items from the UI, 
-// the listener on the singleton will keep the old controllers alive. 
-// I have to either remove the listener when the item is removed, or use a WeakChangeListener.

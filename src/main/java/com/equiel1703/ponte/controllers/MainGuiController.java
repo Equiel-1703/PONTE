@@ -1,6 +1,7 @@
 package com.equiel1703.ponte.controllers;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.equiel1703.ponte.net.NetUtils;
@@ -18,10 +19,14 @@ public class MainGuiController {
   @FXML
   private HBox NetworkInterfacesHBox;
 
+  private List<NetInterfaceController> activeNetInterfaceControllers = new LinkedList<>();
+
   // Called when the user clicks the "Scan Interfaces" button
   public void onScanClick(ActionEvent e) {
-    System.out.println("Scanning Network Interfaces...");
+    NetworkInterfacesHBox.getChildren().clear();
+    activeNetInterfaceControllers.forEach(NetInterfaceController::dispose);
 
+    System.out.println("Scanning Network Interfaces...");
     List<NetworkIF> listNetInt = NetUtils.getNetworkInterfaces();
 
     for (NetworkIF n : listNetInt) {
@@ -29,14 +34,15 @@ public class MainGuiController {
       System.out.println("-----");
 
       try {
-        FXMLLoader netInterfaceUiLoader = new FXMLLoader(FXMLS.NET_INTERFACE_ELEMENT.getUrl());
+        FXMLLoader netInterfaceUILoader = new FXMLLoader(FXMLS.NET_INTERFACE_ELEMENT.getUrl());
 
-        Node netInterfaceNode = netInterfaceUiLoader.load();
-        NetInterfaceController controller = netInterfaceUiLoader.getController();
+        Node netInterfaceUIRootNode = netInterfaceUILoader.load();
+        NetInterfaceController netInterfaceController = netInterfaceUILoader.getController();
 
-        controller.setInterfaceData(n);
+        netInterfaceController.setInterfaceData(n);
+        activeNetInterfaceControllers.add(netInterfaceController);
 
-        NetworkInterfacesHBox.getChildren().add(netInterfaceNode);
+        NetworkInterfacesHBox.getChildren().add(netInterfaceUIRootNode);
       } catch (IOException e1) {
         e1.printStackTrace();
       }
