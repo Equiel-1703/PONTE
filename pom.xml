@@ -125,7 +125,7 @@
           <noManPages>true</noManPages>
           <launcher>${project.bin.name}</launcher>
           <jlinkImageName>${project.name}</jlinkImageName>
-          <jlinkZipName>${project.bin.name}</jlinkZipName>
+          <jlinkZipName>${project.name}</jlinkZipName>
           <mainClass>${main.module.path}/${main.class.path}</mainClass>
         </configuration>
       </plugin>

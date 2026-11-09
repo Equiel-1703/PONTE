@@ -4,7 +4,7 @@ module com.equiel1703.ponte {
   requires com.github.oshi;
   requires org.slf4j.nop;
 
-  exports com.equiel1703.ponte;
+  exports com.equiel1703.ponte to javafx.graphics;
 
   opens com.equiel1703.ponte.controllers to javafx.fxml;
 }
