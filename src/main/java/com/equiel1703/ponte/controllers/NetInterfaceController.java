@@ -1,8 +1,8 @@
-package com.equiel1703.controllers;
+package com.equiel1703.ponte.controllers;
 
-import com.equiel1703.net.NetUtils;
-import com.equiel1703.singletons.AppState;
-import com.equiel1703.urls.NetInterfaceIcon;
+import com.equiel1703.ponte.net.NetUtils;
+import com.equiel1703.ponte.singletons.AppState;
+import com.equiel1703.ponte.urls.NetInterfaceIcon;
 
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;

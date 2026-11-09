@@ -1,4 +1,4 @@
-package com.equiel1703.singletons;
+package com.equiel1703.ponte.singletons;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

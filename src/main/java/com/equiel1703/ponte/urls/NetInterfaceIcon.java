@@ -1,8 +1,8 @@
-package com.equiel1703.urls;
+package com.equiel1703.ponte.urls;
 
 import java.net.URL;
 
-import com.equiel1703.PONTE;
+import com.equiel1703.ponte.PONTE;
 
 public enum NetInterfaceIcon {
   ETHERNET("imgs/cabled.png"),

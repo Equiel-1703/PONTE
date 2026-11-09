@@ -1,10 +1,10 @@
-package com.equiel1703.controllers;
+package com.equiel1703.ponte.controllers;
 
 import java.io.IOException;
 import java.util.List;
 
-import com.equiel1703.net.NetUtils;
-import com.equiel1703.urls.FXMLS;
+import com.equiel1703.ponte.net.NetUtils;
+import com.equiel1703.ponte.urls.FXMLS;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

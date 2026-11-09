@@ -1,8 +1,8 @@
-package com.equiel1703;
+package com.equiel1703.ponte;
 
 import java.io.IOException;
 
-import com.equiel1703.urls.FXMLS;
+import com.equiel1703.ponte.urls.FXMLS;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
