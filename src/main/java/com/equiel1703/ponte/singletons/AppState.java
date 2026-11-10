@@ -7,6 +7,7 @@ import oshi.hardware.NetworkIF;
 
 public class AppState {
   private ObjectProperty<NetworkIF> activeInterface = new SimpleObjectProperty<>();
+  private boolean ponteActive = false;
 
   // Constructor
   private AppState() { }
@@ -30,5 +31,13 @@ public class AppState {
 
   public ObjectProperty<NetworkIF> getActiveInterfaceProperty() {
     return this.activeInterface;
+  }
+
+  public void toggleActive() {
+    this.ponteActive = !this.ponteActive;
+  }
+
+  public boolean isActive() {
+    return this.ponteActive;
   }
 }

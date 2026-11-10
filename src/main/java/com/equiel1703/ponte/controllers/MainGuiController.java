@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.equiel1703.ponte.net.NetUtils;
+import com.equiel1703.ponte.singletons.AppState;
 import com.equiel1703.ponte.urls.FXMLS;
 
 import javafx.event.ActionEvent;
@@ -49,5 +50,11 @@ public class MainGuiController {
     }
 
     System.out.println("- Scanning Done -");
+  }
+
+  // Called when the user flips on/off switch
+  public void turnOnOff() {
+    boolean active = AppState.getInstance().isActive();
+    System.out.println("PONTE is " + (active ? "ON" : "OFF"));
   }
 }
