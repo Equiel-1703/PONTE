@@ -8,8 +8,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import oshi.hardware.NetworkIF;
 
 public class AppState {
-  private ObjectProperty<NetworkIF> activeInterface = new SimpleObjectProperty<>();
-  private boolean ponteActive = false;
+  private ObjectProperty<NetworkIF> activeInterface = new SimpleObjectProperty<>(null);
+  private ObjectProperty<Boolean> ponteActive = new SimpleObjectProperty<>(Boolean.FALSE);
 
   // Constructor
   private AppState() { }
@@ -24,7 +24,7 @@ public class AppState {
   public void setActiveInterface(NetworkIF netInt) {
     activeInterface.set(netInt);
 
-    System.out.println("Active Interface:  " + netInt.getName());
+    System.out.println("Active Interface:  " + (netInt != null ? netInt.getName() : "None"));
   }
 
   public NetworkIF getActiveInterface() {
@@ -35,19 +35,23 @@ public class AppState {
     return this.activeInterface;
   }
 
+  public ObjectProperty<Boolean> getOnOffProperty() {
+    return this.ponteActive;
+  }
+
   public void turnOn() throws NoInterfaceSelected {
     if (this.activeInterface.get() == null) {
       throw new NoInterfaceSelected("You must select a network interface first!");
     }
 
-    this.ponteActive = true;
+    this.ponteActive.set(Boolean.TRUE);
   }
 
   public void turnOff() {
-    this.ponteActive = false;
+    this.ponteActive.set(Boolean.FALSE);
   }
 
   public boolean isActive() {
-    return this.ponteActive;
+    return this.ponteActive.get().booleanValue();
   }
 }

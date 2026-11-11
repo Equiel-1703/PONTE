@@ -25,7 +25,14 @@ public class NetInterfaceController {
   // The change listener that detects when a UI inteerface element should enter
   // the "active" state
   private final ChangeListener<NetworkIF> activeInterfaceChangeListener = (observable, oldValue, newValue) -> {
-    boolean active = this.netInt.getName() == newValue.getName();
+    boolean active;
+
+    if (newValue != null) {
+      active = this.netInt.getName() == newValue.getName();
+    } else {
+      active = false;
+    }
+
     this.NetIntRoot.pseudoClassStateChanged(ACTIVE_PSEUDO_CLASS, active);
   };
 
@@ -84,8 +91,8 @@ public class NetInterfaceController {
   }
 
   // Called by the MainGUI when we want to get rid of this controller.
-  // We have to remote the listener from the AppState active interface property so it
-  // doesn't leak
+  // We have to remote the listener from the AppState active interface property so
+  // it doesn't leak
   public void dispose() {
     AppState
         .getInstance()

@@ -32,8 +32,27 @@ public class MainGuiController {
 
   private List<NetInterfaceController> activeNetInterfaceControllers = new LinkedList<>();
 
+  // Called automatically after FXML injection completes
+  @FXML
+  public void initialize() {
+    AppState
+        .getInstance()
+        .getOnOffProperty()
+        .addListener(
+            (observable, oldValue, newValue) -> this.OnOffButton.pseudoClassStateChanged(ON_PSEUDO_CLASS, newValue.booleanValue()));
+  }
+
   // Called when the user clicks the "Scan Interfaces" button
   public void onScanClick(ActionEvent e) {
+    AppState appState = AppState.getInstance();
+
+    if (appState.isActive()) {
+      appState.turnOff();
+    }
+    
+    // When we rescan, it's best to deselect the active interface and turn PONTE off
+    // for stability sake
+    appState.setActiveInterface(null);
     NetworkInterfacesHBox.getChildren().clear();
     activeNetInterfaceControllers.forEach(NetInterfaceController::dispose);
 
@@ -84,8 +103,6 @@ public class MainGuiController {
     }
 
     boolean active = appState.isActive();
-    OnOffButton.pseudoClassStateChanged(ON_PSEUDO_CLASS, active);
-
     System.out.println("PONTE is " + (active ? "ON" : "OFF"));
   }
 }
