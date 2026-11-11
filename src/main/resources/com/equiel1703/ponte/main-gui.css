@@ -1,7 +1,9 @@
 .root {
+    /* Vars */
     -bg-color: #0e1329;
     -scroll-thumb: #394657;
-
+    /* ---- */
+    
     -tab-h: 40px;
     -tab-small-w: 128px;
     -tab-large-w: 300px;
@@ -114,7 +116,7 @@
 /* The header strip containing the tabs */
 .tab-pane > .tab-header-area {
     -fx-padding: 0;
-    -fx-translate-y: 4px;
+    -fx-translate-y: 5px;
 }
 
 /* The Content Area below the tabs */
@@ -232,4 +234,13 @@
 #NetworkInterfacesScrollPane .scroll-bar .decrement-arrow {
     -fx-background-color: #05070e;
     -fx-padding: 3px 2px 4px 3px;
+}
+
+/* ---------- On/Off Button ---------- */
+.onOffButton {
+    -fx-background-color: red;
+}
+
+.onOffButton:on {
+    -fx-background-color: green;
 }
