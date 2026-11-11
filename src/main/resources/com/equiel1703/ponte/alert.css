@@ -1,0 +1,46 @@
+.root {
+    /* Vars */
+    -bg-color: #0e1329;
+    -bg-color-brighter: #323A5C;
+    -border-color: #394657;
+    /* ---- */
+
+    -fx-background-color: -bg-color;
+    -fx-font-family: "VT323";
+    -fx-font-size: 24px;
+
+    -fx-padding: 8px;
+}
+
+.header-panel {
+    -fx-background-color: -bg-color;
+
+    -fx-border-color: white, -border-color;
+    -fx-border-width: 2px, 5px;
+
+    -fx-border-insets: 0, 2px;
+}
+
+.label {
+    -fx-text-fill: #ffffff;
+}
+
+.button-bar .button {
+    -fx-background-color: transparent;
+    -fx-border-image-source: url("imgs/button.png");
+    -fx-border-image-slice: 5 5 5 5 fill;
+    -fx-border-image-width: 5 5 5 5;
+    -fx-border-image-insets: 0;
+    -fx-border-image-repeat: stretch;
+    -fx-padding: 8px;
+}
+
+.button-bar .button:hover {
+    -fx-text-fill: #efef80;
+}
+
+.button-bar .button:pressed {
+    -fx-border-image-source: url("imgs/button-pressed.png");
+
+    -fx-translate-y: 4px;
+}

@@ -1,5 +1,7 @@
 package com.equiel1703.ponte.singletons;
 
+import com.equiel1703.ponte.exceptions.NoInterfaceSelected;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -33,8 +35,16 @@ public class AppState {
     return this.activeInterface;
   }
 
-  public void toggleActive() {
-    this.ponteActive = !this.ponteActive;
+  public void turnOn() throws NoInterfaceSelected {
+    if (this.activeInterface.get() == null) {
+      throw new NoInterfaceSelected("You must select a network interface first!");
+    }
+
+    this.ponteActive = true;
+  }
+
+  public void turnOff() {
+    this.ponteActive = false;
   }
 
   public boolean isActive() {

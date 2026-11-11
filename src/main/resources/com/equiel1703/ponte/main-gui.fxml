@@ -51,7 +51,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <HBox fx:id="MiddlewareStatusHBox" alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0">
+      <HBox fx:id="MiddlewareStatusHBox" alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" spacing="20.0">
          <children>
             <Polygon fill="DODGERBLUE" stroke="BLACK" strokeType="INSIDE">
               <points>
@@ -64,6 +64,7 @@
               </points>
             </Polygon>
             <Label text="Middleware Status" />
+            <Button fx:id="OnOffButton" mnemonicParsing="false" onAction="#turnOnOff" styleClass="onOffButton" text="On/Off" />
          </children>
       </HBox>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
