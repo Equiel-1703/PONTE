@@ -18,11 +18,11 @@ public class NetInterfaceListener implements ChangeListener<NetworkIF> {
 
     @Override
     public void changed(ObservableValue<? extends NetworkIF> observable, NetworkIF oldValue, NetworkIF newValue) {
-        System.out.println("[NetInterfaceListener] changed method called.");
+        System.out.println("[NetInterfaceListener] 'changed' method called.");
 
         boolean active = false;
         if (newValue != null) {
-            active = (this.networkIF.getName() == newValue.getName());
+            active = this.networkIF.getName().equals(newValue.getName());
         }
 
         this.netIntRoot.pseudoClassStateChanged(ACTIVE_PSEUDO_CLASS, active);

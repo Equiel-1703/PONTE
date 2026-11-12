@@ -36,23 +36,20 @@ public class AppState {
 
     // Is the new interface the same we already have?
     NetworkIF current = this.activeInterface.get();
-    String currentName = (current != null ? current.getName() : "");
-    String newName = netInt.getName();
-
-    if (currentName == newName) {
+    if (current != null && current.getName().equals(netInt.getName())) {
       System.out.println("[AppState] New interface same as before. Ignoring...");
       return;
     }
 
     // If we're changing to a different interface with the server running,
     // we have to turn the server off first!
-    if (!currentName.isEmpty() && this.isActive()) {
+    if (this.isActive()) {
       System.out.println("[AppState] WARNING: Changing active interface while running the server!");
       this.turnOff();
     }
 
     this.activeInterface.set(netInt);
-    System.out.println("[AppState] Active Interface: " + newName);
+    System.out.println("[AppState] Active Interface: " + netInt.getName());
   }
 
   public NetworkIF getActiveInterface() {
