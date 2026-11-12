@@ -51,7 +51,6 @@ public class PONTE extends Application {
   public void stop() throws Exception {
     // Force the server to stop and clean resources before exit
     AppState.getInstance().turnOff();
-    
     super.stop();
   }
 
