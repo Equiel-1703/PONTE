@@ -2,6 +2,7 @@ package com.equiel1703.ponte;
 
 import java.io.IOException;
 
+import com.equiel1703.ponte.singletons.AppState;
 import com.equiel1703.ponte.urls.FXMLS;
 
 import javafx.application.Application;
@@ -44,6 +45,14 @@ public class PONTE extends Application {
     stage.setTitle("PONTE");
     stage.setScene(scene);
     stage.show();
+  }
+
+  @Override
+  public void stop() throws Exception {
+    // Force the server to stop and clean resources before exit
+    AppState.getInstance().turnOff();
+    
+    super.stop();
   }
 
   public static void main(String[] args) {

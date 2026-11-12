@@ -2,29 +2,57 @@ package com.equiel1703.ponte.singletons;
 
 import com.equiel1703.ponte.exceptions.NoInterfaceSelected;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 import oshi.hardware.NetworkIF;
 
 public class AppState {
   private ObjectProperty<NetworkIF> activeInterface = new SimpleObjectProperty<>(null);
-  private ObjectProperty<Boolean> ponteActive = new SimpleObjectProperty<>(Boolean.FALSE);
+  private BooleanProperty ponteActive = new SimpleBooleanProperty(false);
 
   // Constructor
-  private AppState() { }
-  
+  private AppState() {
+  }
+
   // Singleton instance
   private static final AppState instance = new AppState();
-  
+
   public static AppState getInstance() {
     return instance;
   }
 
-  public void setActiveInterface(NetworkIF netInt) {
-    activeInterface.set(netInt);
+  public void clearActiveInterface() {
+    this.activeInterface.set(null);
+    System.out.println("[AppState] Active Interface: NONE");
+  }
 
-    System.out.println("Active Interface:  " + (netInt != null ? netInt.getName() : "None"));
+  public void setActiveInterface(NetworkIF netInt) {
+    if (netInt == null) {
+      return;
+    }
+
+    // Is the new interface the same we already have?
+    NetworkIF current = this.activeInterface.get();
+    String currentName = (current != null ? current.getName() : "");
+    String newName = netInt.getName();
+
+    if (currentName == newName) {
+      System.out.println("[AppState] New interface same as before. Ignoring...");
+      return;
+    }
+
+    // If we're changing to a different interface with the server running,
+    // we have to turn the server off first!
+    if (!currentName.isEmpty() && this.isActive()) {
+      System.out.println("[AppState] WARNING: Changing active interface while running the server!");
+      this.turnOff();
+    }
+
+    this.activeInterface.set(netInt);
+    System.out.println("[AppState] Active Interface: " + newName);
   }
 
   public NetworkIF getActiveInterface() {
@@ -35,7 +63,7 @@ public class AppState {
     return this.activeInterface;
   }
 
-  public ObjectProperty<Boolean> getOnOffProperty() {
+  public BooleanProperty getOnOffProperty() {
     return this.ponteActive;
   }
 
@@ -44,14 +72,24 @@ public class AppState {
       throw new NoInterfaceSelected("You must select a network interface first!");
     }
 
-    this.ponteActive.set(Boolean.TRUE);
+    // If the server is already on, we don't waste time
+    if (this.ponteActive.get()) {
+      return;
+    }
+
+    this.ponteActive.set(true);
   }
 
   public void turnOff() {
-    this.ponteActive.set(Boolean.FALSE);
+    // If the server is already off, we don't waste time
+    if (!this.ponteActive.get()) {
+      return;
+    }
+
+    this.ponteActive.set(false);
   }
 
   public boolean isActive() {
-    return this.ponteActive.get().booleanValue();
+    return this.ponteActive.get();
   }
 }

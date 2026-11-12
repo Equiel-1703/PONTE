@@ -1,11 +1,10 @@
 package com.equiel1703.ponte.controllers;
 
+import com.equiel1703.ponte.listeners.NetInterfaceListener;
 import com.equiel1703.ponte.net.NetUtils;
 import com.equiel1703.ponte.singletons.AppState;
 import com.equiel1703.ponte.urls.NetInterfaceIcon;
 
-import javafx.beans.value.ChangeListener;
-import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -20,21 +19,8 @@ import oshi.hardware.NetworkIF;
 public class NetInterfaceController {
   // The network interface this node is controlling
   private NetworkIF netInt;
-  // The active state pseudo-class of the Network Interfaces
-  private static final PseudoClass ACTIVE_PSEUDO_CLASS = PseudoClass.getPseudoClass("active");
-  // The change listener that detects when a UI inteerface element should enter
-  // the "active" state
-  private final ChangeListener<NetworkIF> activeInterfaceChangeListener = (observable, oldValue, newValue) -> {
-    boolean active;
-
-    if (newValue != null) {
-      active = this.netInt.getName() == newValue.getName();
-    } else {
-      active = false;
-    }
-
-    this.NetIntRoot.pseudoClassStateChanged(ACTIVE_PSEUDO_CLASS, active);
-  };
+  // The listener for when the active interface is changed
+  private NetInterfaceListener netInterfaceListener;
 
   @FXML
   private HBox NetIntRoot;
@@ -75,15 +61,16 @@ public class NetInterfaceController {
     this.NetIntTooltip.setText(netInt.getDisplayName());
 
     // Add a listener to the active interface ObjectProperty
+    this.netInterfaceListener = new NetInterfaceListener(netInt, NetIntRoot);
     AppState
         .getInstance()
         .getActiveInterfaceProperty()
-        .addListener(this.activeInterfaceChangeListener);
+        .addListener(this.netInterfaceListener);
   }
 
   // Called when the user clicks in the interface
   public void onClicked(MouseEvent e) {
-    System.out.println("The user clicked on " + this.netInt.getName());
+    System.out.println("[NetInterfaceController] The user clicked on " + this.netInt.getName());
 
     AppState
         .getInstance()
@@ -97,6 +84,8 @@ public class NetInterfaceController {
     AppState
         .getInstance()
         .getActiveInterfaceProperty()
-        .removeListener(this.activeInterfaceChangeListener);
+        .removeListener(this.netInterfaceListener);
+
+    this.netInterfaceListener = null;
   }
 }

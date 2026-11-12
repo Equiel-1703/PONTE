@@ -5,7 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.equiel1703.ponte.exceptions.NoInterfaceSelected;
-
+import com.equiel1703.ponte.listeners.OnOffButtonListener;
+import com.equiel1703.ponte.listeners.ServerThreadManager;
 import com.equiel1703.ponte.net.NetUtils;
 import com.equiel1703.ponte.singletons.AppState;
 import com.equiel1703.ponte.urls.FXMLS;
@@ -23,40 +24,48 @@ import javafx.scene.layout.HBox;
 import oshi.hardware.NetworkIF;
 
 public class MainGuiController {
-  private static final PseudoClass ON_PSEUDO_CLASS = PseudoClass.getPseudoClass("on");
-
   @FXML
   private HBox NetworkInterfacesHBox;
   @FXML
   private Button OnOffButton;
+  private static final PseudoClass ON_PSEUDO_CLASS = PseudoClass.getPseudoClass("on");
 
-  private List<NetInterfaceController> activeNetInterfaceControllers = new LinkedList<>();
+  private OnOffButtonListener onOffButtonListener;
+  private ServerThreadManager serverThreadManager;
+  
+  private List<NetInterfaceController> onScreenNetInterfaceControllers = new LinkedList<>();
 
   // Called automatically after FXML injection completes
   @FXML
   public void initialize() {
-    AppState
-        .getInstance()
+    this.onOffButtonListener = new OnOffButtonListener(OnOffButton, ON_PSEUDO_CLASS);
+    this.serverThreadManager = new ServerThreadManager();
+
+    AppState appState = AppState.getInstance();
+    appState
         .getOnOffProperty()
-        .addListener(
-            (observable, oldValue, newValue) -> this.OnOffButton.pseudoClassStateChanged(ON_PSEUDO_CLASS, newValue.booleanValue()));
+        .addListener(this.onOffButtonListener);
+    appState
+        .getOnOffProperty()
+        .addListener(this.serverThreadManager);
   }
 
   // Called when the user clicks the "Scan Interfaces" button
-  public void onScanClick(ActionEvent e) {
+  public void onScanClick(ActionEvent ev) {
+    // I don't like the idea of scanning new interfaces with the server on, so I'm
+    // turning it off
     AppState appState = AppState.getInstance();
-
     if (appState.isActive()) {
       appState.turnOff();
     }
-    
-    // When we rescan, it's best to deselect the active interface and turn PONTE off
-    // for stability sake
-    appState.setActiveInterface(null);
-    NetworkInterfacesHBox.getChildren().clear();
-    activeNetInterfaceControllers.forEach(NetInterfaceController::dispose);
 
-    System.out.println("Scanning Network Interfaces...");
+    // Deselect the active interface
+    appState.clearActiveInterface();
+    NetworkInterfacesHBox.getChildren().clear();
+    onScreenNetInterfaceControllers.forEach(NetInterfaceController::dispose);
+    onScreenNetInterfaceControllers.clear();
+
+    System.out.println("[MainGuiController] Scanning Network Interfaces...");
     List<NetworkIF> listNetInt = NetUtils.getNetworkInterfaces();
 
     for (NetworkIF n : listNetInt) {
@@ -70,15 +79,15 @@ public class MainGuiController {
         NetInterfaceController netInterfaceController = netInterfaceUILoader.getController();
 
         netInterfaceController.setInterfaceData(n);
-        activeNetInterfaceControllers.add(netInterfaceController);
+        onScreenNetInterfaceControllers.add(netInterfaceController);
 
         NetworkInterfacesHBox.getChildren().add(netInterfaceUIRootNode);
-      } catch (IOException e1) {
-        e1.printStackTrace();
+      } catch (IOException e) {
+        e.printStackTrace();
       }
     }
 
-    System.out.println("- Scanning Done -");
+    System.out.println("[MainGuiController] - Scanning Done -");
   }
 
   // Called when the user flips the on/off switch
@@ -103,6 +112,6 @@ public class MainGuiController {
     }
 
     boolean active = appState.isActive();
-    System.out.println("PONTE is " + (active ? "ON" : "OFF"));
+    System.out.println("[MainGuiController] PONTE is " + (active ? "ON" : "OFF"));
   }
 }
