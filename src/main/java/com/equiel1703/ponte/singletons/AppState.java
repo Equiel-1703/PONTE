@@ -26,7 +26,7 @@ public class AppState {
 
   public void clearActiveInterface() {
     this.activeInterface.set(null);
-    System.out.println("[AppState] Active Interface: NONE");
+    System.out.println("[AppState] Cleared Active Interface.");
   }
 
   public void setActiveInterface(NetworkIF netInt) {
@@ -73,7 +73,7 @@ public class AppState {
     }
 
     // If the server is already on, we don't waste time
-    if (this.ponteActive.get()) {
+    if (this.isActive()) {
       return;
     }
 
@@ -82,7 +82,7 @@ public class AppState {
 
   public void turnOff() {
     // If the server is already off, we don't waste time
-    if (!this.ponteActive.get()) {
+    if (!this.isActive()) {
       return;
     }
 

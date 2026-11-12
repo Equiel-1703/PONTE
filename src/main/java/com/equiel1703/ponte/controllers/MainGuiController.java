@@ -53,15 +53,17 @@ public class MainGuiController {
   // Called when the user clicks the "Scan Interfaces" button
   public void onScanClick(ActionEvent ev) {
     // I don't like the idea of scanning new interfaces with the server on, so I'm
-    // turning it off
+    // turning it off first
     AppState appState = AppState.getInstance();
-    if (appState.isActive()) {
-      appState.turnOff();
-    }
+    appState.turnOff();
 
     // Deselect the active interface
     appState.clearActiveInterface();
+
+    // Clear HBox
     NetworkInterfacesHBox.getChildren().clear();
+
+    // Dispose controllers and clear their LinkedList
     onScreenNetInterfaceControllers.forEach(NetInterfaceController::dispose);
     onScreenNetInterfaceControllers.clear();
 
@@ -76,10 +78,10 @@ public class MainGuiController {
         FXMLLoader netInterfaceUILoader = new FXMLLoader(FXMLS.NET_INTERFACE_ELEMENT.getUrl());
 
         Node netInterfaceUIRootNode = netInterfaceUILoader.load();
-        NetInterfaceController netInterfaceController = netInterfaceUILoader.getController();
+        NetInterfaceController netInterfaceUIController = netInterfaceUILoader.getController();
 
-        netInterfaceController.setInterfaceData(n);
-        onScreenNetInterfaceControllers.add(netInterfaceController);
+        netInterfaceUIController.setInterfaceData(n);
+        onScreenNetInterfaceControllers.add(netInterfaceUIController);
 
         NetworkInterfacesHBox.getChildren().add(netInterfaceUIRootNode);
       } catch (IOException e) {
@@ -111,7 +113,6 @@ public class MainGuiController {
       alert.showAndWait();
     }
 
-    boolean active = appState.isActive();
-    System.out.println("[MainGuiController] PONTE is " + (active ? "ON" : "OFF"));
+    System.out.println("[MainGuiController] PONTE is " + (appState.isActive() ? "ON" : "OFF"));
   }
 }
