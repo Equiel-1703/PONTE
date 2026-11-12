@@ -1,9 +1,11 @@
 package com.equiel1703.ponte.listeners;
 
 import com.equiel1703.ponte.net.PonteServer;
+import com.equiel1703.ponte.singletons.AppState;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import oshi.hardware.NetworkIF;
 
 public class ServerThreadManager implements ChangeListener<Boolean> {
     private Thread ponteServerThread = null;
@@ -24,7 +26,11 @@ public class ServerThreadManager implements ChangeListener<Boolean> {
     }
 
     private void serverOn() {
-        this.ponteServer = new PonteServer();
+        NetworkIF activeNetworkIF = AppState
+                .getInstance()
+                .getActiveInterface();
+
+        this.ponteServer = new PonteServer(activeNetworkIF);
         this.ponteServerThread = Thread
                 .ofVirtual()
                 .name("ponte-server-vthread")
