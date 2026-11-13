@@ -1,22 +1,21 @@
 package com.equiel1703.ponte.net;
 
-import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.nio.charset.StandardCharsets;
 
+import com.equiel1703.ponte.net.protocol.PontePacket;
 import com.equiel1703.ponte.singletons.AppState;
 
 import javafx.application.Platform;
 import oshi.hardware.NetworkIF;
 
 public class PonteServer implements Runnable {
-    private static final int PONTE_SERVER_PORT = 5_000;
+    private static final int PONTE_SERVER_PORT = 20_564;
     private final NetworkIF networkIF;
 
     private volatile ServerSocket serverSocket = null;
@@ -30,7 +29,8 @@ public class PonteServer implements Runnable {
     @Override
     public void run() {
         // Outer try-with-resources to manage the ServerSocket lifecycle
-        try (ServerSocket srv = new ServerSocket()) {
+        try (ServerSocket srv = new ServerSocket())
+        {
             final String ipv4 = this.networkIF.getIPv4addr()[0];
             final InetAddress addr = InetAddress.getByName(ipv4);
 
@@ -42,33 +42,25 @@ public class PonteServer implements Runnable {
             System.out.printf("[PonteServer] Server listening on (%s) %s:%d%n",
                     networkIF.getName(), ipv4, PONTE_SERVER_PORT);
 
-            // Inner try-with-resources to manage the Client Socket and Readers
+            // Inner try-with-resources to manage the Client Socket and DataInputStream
             try (Socket cli = srv.accept();
-                    BufferedReader br = new BufferedReader(
-                            new InputStreamReader(cli.getInputStream(), StandardCharsets.UTF_8))
-                ) {
+                DataInputStream in = new DataInputStream(cli.getInputStream()))
+            {
                 this.clientSocket = cli;
-                System.out.println("[PonteServer] Client connected: " + cli.getInetAddress().toString());
+                System.out.printf("[PonteServer] Client connected: %s:%d%n", cli.getInetAddress().toString(), cli.getPort());
 
-                String line;
-                // readLine() will return null if the client disconnects
-                while (running && (line = br.readLine()) != null) {
-                    System.out.println("Client says: " + line);
-
-                    if ("END".equals(line)) {
-                        running = false;
-                    }
-                }
+                PontePacket packet = PontePacket.readPacketFromStream(in);
+                System.out.println("[PonteServer] Received packet: " + packet.toString());
             }
             System.out.println("[PonteServer] --- Server Finished ---");
         } catch (SocketException e) {
             if (running == false) {
                 // If running is false, then this exception was thrown when stop()
-                // closed the socket to unblock accept() or readLine(). It's an expected
+                // closed the socket to unblock accept() or a read. It's an expected
                 // behavior, not a real error.
                 System.out.println("[PonteServer] --- Server stopped by user ---");
             } else {
-                // If running was not false, it's a real error.
+                // If running was not false, then it's a real error.
                 handleUnexpectedException(e);
             }
         } catch (Exception e) {
