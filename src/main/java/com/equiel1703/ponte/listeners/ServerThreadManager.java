@@ -13,15 +13,10 @@ public class ServerThreadManager implements ChangeListener<Boolean> {
 
     @Override
     public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-        if (newValue) {
+        if (newValue.booleanValue()) {
             serverOn();
         } else {
-            try {
-                serverOff();
-            } catch (InterruptedException e) {
-                System.out.println("[ServerThreadManager] Something went wrong when trying to stop PONTE server.");
-                e.printStackTrace();
-            }
+            serverOff();
         }
     }
 
@@ -37,18 +32,26 @@ public class ServerThreadManager implements ChangeListener<Boolean> {
                 .start(this.ponteServer);
     }
 
-    private void serverOff() throws InterruptedException {
-        // Signal to internal loop to terminate
-        this.ponteServer.stop();
-        // Wake up the thread immediately if it's in blocking operation
-        this.ponteServerThread.interrupt();
-
-        // Force wait for the thread to finish!
-        // We want to guarantee the socket is released and everything is ok
-        // before proceeding. We will wait at most 1s before proceeding.
-        this.ponteServerThread.join(1_000);
-
-        this.ponteServer = null;
-        this.ponteServerThread = null;
+    private void serverOff() {
+        if (this.ponteServer != null && this.ponteServerThread != null)
+        {
+            // Set running = false and close sockets to immediately unblock I/O
+            this.ponteServer.stop();
+            // Interrupt in case the thread is in a non-socket blocking call (like sleep/wait)
+            this.ponteServerThread.interrupt();
+    
+            try {
+                // Force to wait for the thread to finish!
+                // We want to guarantee the socket is released and everything is ok
+                // before proceeding. We will wait at most 200ms before proceeding.
+                this.ponteServerThread.join(200);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("[ServerThreadManager] Interrupted while stopping PONTE server.");
+            } finally {
+                this.ponteServer = null;
+                this.ponteServerThread = null;
+            }    
+        }
     }
 }
