@@ -1,6 +1,6 @@
 package com.equiel1703.ponte.singletons;
 
-import com.equiel1703.ponte.exceptions.NoInterfaceSelected;
+import com.equiel1703.ponte.exceptions.NoInterfaceSelectedException;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -64,9 +64,9 @@ public class AppState {
     return this.ponteActive;
   }
 
-  public void turnOn() throws NoInterfaceSelected {
+  public void turnOn() throws NoInterfaceSelectedException {
     if (this.activeInterface.get() == null) {
-      throw new NoInterfaceSelected("You must select a network interface first!");
+      throw new NoInterfaceSelectedException("You must select a network interface first!");
     }
 
     // If the server is already on, we don't waste time

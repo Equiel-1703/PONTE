@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.equiel1703.ponte.exceptions.NoInterfaceSelected;
+import com.equiel1703.ponte.exceptions.NoInterfaceSelectedException;
 import com.equiel1703.ponte.listeners.OnOffButtonListener;
 import com.equiel1703.ponte.listeners.ServerThreadManager;
 import com.equiel1703.ponte.net.NetUtils;
@@ -102,7 +102,7 @@ public class MainGuiController {
       } else {
         appState.turnOn();
       }
-    } catch (NoInterfaceSelected e) {
+    } catch (NoInterfaceSelectedException e) {
       System.out.println(e.getMessage());
 
       StyledAlert alert = new StyledAlert(AlertType.ERROR);
