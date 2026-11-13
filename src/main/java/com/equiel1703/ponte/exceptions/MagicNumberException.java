@@ -1,8 +1,10 @@
 package com.equiel1703.ponte.exceptions;
 
+import java.io.IOException;
+
 import com.equiel1703.ponte.net.protocol.PontePacket;
 
-public class MagicNumberException extends RuntimeException {
+public class MagicNumberException extends IOException {
     public MagicNumberException(short magicNumber) {
         super(
             String.format("Invalid magic number received: 0x%04X ('%c%c'). Expected: 0x%04X ('%c%c')",

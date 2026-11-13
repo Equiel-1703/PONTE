@@ -27,13 +27,13 @@ public class PontePacket {
     private byte[] payload;
 
     // Constructor for no payload operations
-    public PontePacket(PonteOperation op) {
+    public PontePacket(PonteOperation op) throws InvalidPayloadSizeException {
         setOperation(op);
         setPayload(EMPTY_PAYLOAD);
     }
 
     // Constructor for operations with payload
-    public PontePacket(PonteOperation op, byte[] payload) {
+    public PontePacket(PonteOperation op, byte[] payload) throws InvalidPayloadSizeException {
         setOperation(op);
         setPayload(payload);
     }
@@ -46,7 +46,7 @@ public class PontePacket {
         return this.op;
     }
 
-    public void setPayload(byte[] payload) {
+    public void setPayload(byte[] payload) throws InvalidPayloadSizeException {
         if (payload.length < 0 || payload.length > MAX_PAYLOAD_SIZE_BYTES) {
             throw new InvalidPayloadSizeException(payload.length);
         }
