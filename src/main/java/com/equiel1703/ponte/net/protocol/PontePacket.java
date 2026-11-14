@@ -76,7 +76,9 @@ public class PontePacket {
                 .array();
     }
 
-    public static PontePacket readPacketFromStream(DataInputStream in) throws IOException {
+    public static PontePacket readPacketFromStream(DataInputStream in)
+            throws MagicNumberException, ProtocolVersionMismatchException, InvalidOperationIdException,
+            InvalidPayloadSizeException, IOException {
         // Get magic word
         short pMagic = in.readShort();
         if (pMagic != PontePacket.MAGIC_NUMBER) {
@@ -108,10 +110,9 @@ public class PontePacket {
     public String toString() {
         return String.format(
                 "PontePacket{magic=0x%04X, version=0x%02X, op=%s, payloadLen=%d}",
-                MAGIC_NUMBER, 
-                VERSION, 
-                op.name(), 
-                payloadLen
-            );
+                MAGIC_NUMBER,
+                VERSION,
+                op.name(),
+                payloadLen);
     }
 }
