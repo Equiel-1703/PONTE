@@ -1,6 +1,7 @@
 package com.equiel1703.ponte.net.protocol;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
@@ -10,7 +11,7 @@ import com.equiel1703.ponte.exceptions.MagicNumberException;
 import com.equiel1703.ponte.exceptions.ProtocolVersionMismatchException;
 
 public class PontePacket {
-    public static final short MAGIC_NUMBER = 0x5054;            // Our magic number. Stands for 'P''T'
+    public static final short MAGIC_NUMBER = 0x5054;            // Our magic number. Stands for "PT" (Ponte)
     public static final byte VERSION = 0x01;                    // 0.1
     public static final int MAX_PAYLOAD_SIZE_BYTES = 64 * 1024; // 64 KiB max payload size
 
@@ -23,7 +24,6 @@ public class PontePacket {
     public static final byte[] EMPTY_PAYLOAD = new byte[0];
 
     private final PonteOperation op;
-    private final int payloadLen;
     private final byte[] payload;
 
     // Constructor for no payload operations
@@ -33,36 +33,36 @@ public class PontePacket {
 
     // Constructor for operations with payload
     public PontePacket(PonteOperation op, byte[] payload) throws InvalidPayloadSizeException {
-        if (payload.length < 0 || payload.length > MAX_PAYLOAD_SIZE_BYTES) {
+        if (payload.length > MAX_PAYLOAD_SIZE_BYTES) {
             throw new InvalidPayloadSizeException(payload.length);
         }
 
         this.op = op;
         this.payload = payload;
-        this.payloadLen = payload.length;
     }
 
     public PonteOperation getOperation() {
         return this.op;
     }
 
+    // Returns a copy of the payload to prevent external modification
     public byte[] getPayload() {
-        return this.payload;
+        return this.payload.clone();
     }
 
     public int getPayloadLen() {
-        return this.payloadLen;
+        return this.payload.length;
     }
 
     public byte[] getPacketAsBytes() {
-        final int payloadSizeBytes = payloadLen * Byte.BYTES;
+        final int payloadSizeBytes = this.payload.length * Byte.BYTES;
 
         return ByteBuffer
                 .allocate(HEADER_SIZE_BYTES + payloadSizeBytes)
                 .putShort(MAGIC_NUMBER)
                 .put(VERSION)
                 .put(this.op.getId())
-                .putInt(payloadLen)
+                .putInt(payloadSizeBytes)
                 .put(payload)
                 .array();
     }
@@ -97,13 +97,18 @@ public class PontePacket {
         return new PontePacket(op, pPayload);
     }
 
+    public static void writePacketToStream(DataOutputStream out, PontePacket packet) throws IOException {
+        out.write(packet.getPacketAsBytes());
+        out.flush();
+    }
+
     @Override
     public String toString() {
         return String.format(
                 "PontePacket{magic=0x%04X, version=0x%02X, op=%s, payloadLen=%d}",
                 MAGIC_NUMBER,
                 VERSION,
-                op.name(),
-                payloadLen);
+                this.op.name(),
+                this.payload.length);
     }
 }
