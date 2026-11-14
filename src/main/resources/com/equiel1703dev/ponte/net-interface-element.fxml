@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<HBox fx:id="NetIntRoot" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClicked" prefHeight="125.0" prefWidth="410.0" spacing="15.0" styleClass="netInterface" stylesheets="@net-interface-element.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.equiel1703dev.ponte.controllers.NetInterfaceController">
+   <children>
+      <ImageView fx:id="NetIntIcon" fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+         <image>
+            <Image url="@imgs/generic.png" />
+         </image></ImageView>
+      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label fx:id="NetIntName" text="eth0">
+               <tooltip>
+                  <Tooltip fx:id="NetIntTooltip" text="Empty Tooltip" wrapText="true" />
+               </tooltip></Label>
+            <TextFlow prefWidth="200.0" VBox.vgrow="NEVER">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="netIntPropertyName" text="IP:" />
+                  <Text fx:id="NetIntIP" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="netIntPropertyValue" text="192.168.100.100" />
+               </children>
+            </TextFlow>
+            <TextFlow prefWidth="200.0" VBox.vgrow="NEVER">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="netIntPropertyName" text="MASK:" />
+                  <Text fx:id="NetIntMask" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="netIntPropertyValue" text="255.255.255.100" />
+               </children>
+            </TextFlow>
+         </children></VBox>
+   </children>
+   <padding>
+      <Insets left="10.0" />
+   </padding>
+</HBox>
