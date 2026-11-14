@@ -1,6 +1,7 @@
 package com.equiel1703.ponte.net;
 
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -8,6 +9,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
+import com.equiel1703.ponte.exceptions.InvalidOperationIdException;
+import com.equiel1703.ponte.exceptions.InvalidPayloadSizeException;
+import com.equiel1703.ponte.exceptions.MagicNumberException;
+import com.equiel1703.ponte.exceptions.ProtocolVersionMismatchException;
 import com.equiel1703.ponte.net.protocol.PontePacket;
 import com.equiel1703.ponte.singletons.AppState;
 
@@ -42,15 +47,35 @@ public class PonteServer implements Runnable {
             System.out.printf("[PonteServer] Server listening on (%s) %s:%d%n",
                     networkIF.getName(), ipv4, PONTE_SERVER_PORT);
 
-            // Inner try-with-resources to manage the Client Socket and DataInputStream
-            try (Socket cli = srv.accept();
-                DataInputStream in = new DataInputStream(cli.getInputStream()))
-            {
-                this.clientSocket = cli;
-                System.out.printf("[PonteServer] Client connected: %s:%d%n", cli.getInetAddress().toString(), cli.getPort());
+            // This loop will keep the server looking for new clients
+            while (running) {
+                // Inner try-with-resources to manage the client Socket and it's DataInputStream
+                try (Socket cli = srv.accept();
+                    DataInputStream in = new DataInputStream(cli.getInputStream()))
+                {
+                    this.clientSocket = cli;
+                    System.out.printf("[PonteServer] Client connected: %s:%d%n", cli.getInetAddress().toString(), cli.getPort());
+    
+                    // This loop will keep the server reading packets from the client
+                    // until the client disconnects, the server is stopped or an exception occurs
+                    while (running) {
+                        PontePacket packet = PontePacket.readPacketFromStream(in);
+                        System.out.println("[PonteServer] Received packet from client: " + packet.toString());
+                    }
+                } catch (EOFException e) {
+                    // This exception can happen when the client simply disconnects, we can ignore it
+                    System.out.println("[PonteServer] EOFException: Client disconnected. Everything is fine.");
+                } catch (MagicNumberException
+                    | ProtocolVersionMismatchException
+                    | InvalidOperationIdException
+                    | InvalidPayloadSizeException e) {
+                    // These exceptions are thrown when the client sends a malformed packet
+                    System.err.println("[PonteServer] Malformed packet received from client: " + e.getMessage());
+                } finally {
+                    this.clientSocket = null;
+                }
 
-                PontePacket packet = PontePacket.readPacketFromStream(in);
-                System.out.println("[PonteServer] Received packet: " + packet.toString());
+                System.out.println("[PonteServer] Client disconnected. Waiting for new one...");
             }
             System.out.println("[PonteServer] --- Server Finished ---");
         } catch (SocketException e) {
@@ -64,6 +89,7 @@ public class PonteServer implements Runnable {
                 handleUnexpectedException(e);
             }
         } catch (Exception e) {
+            // Other exceptions are unexpected and should be logged as errors
             handleUnexpectedException(e);
         } finally {
             this.clientSocket = null;
