@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import com.equiel1703dev.ponte.net.protocol.enums.PonteOperation;
 import com.equiel1703dev.ponte.exceptions.InvalidOperationIdException;
 import com.equiel1703dev.ponte.exceptions.InvalidPayloadSizeException;
 import com.equiel1703dev.ponte.exceptions.MagicNumberException;
