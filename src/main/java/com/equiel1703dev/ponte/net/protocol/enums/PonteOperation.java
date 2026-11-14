@@ -1,14 +1,14 @@
-package com.equiel1703dev.ponte.net.protocol;
+package com.equiel1703dev.ponte.net.protocol.enums;
 
 import java.util.Arrays;
 import java.util.Optional;
 
 public enum PonteOperation {
-    OP_REQ_SYSINFO((byte)0x01),
-    OP_RES_SYSINFO((byte)0x02),
-    OP_REQ_BIND_SERVICE((byte)0x10),
-    OP_RES_BIND_SERVICE((byte)0x11),
-    OP_ACK_BIND_SERVICE((byte)0x12),
+    OP_SYSINFO_REQ((byte)0x01),
+    OP_SYSINFO_RES((byte)0x02),
+    OP_BIND_SERVICE_REQ((byte)0x10),
+    OP_BIND_SERVICE_RES((byte)0x11),
+    OP_BIND_SERVICE_ACK((byte)0x12),
     OP_ERROR((byte)0xFF);
 
     public static final int SIZE_BYTES = Byte.BYTES;
