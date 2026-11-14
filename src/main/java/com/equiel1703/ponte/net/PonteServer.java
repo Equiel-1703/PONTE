@@ -1,6 +1,7 @@
 package com.equiel1703.ponte.net;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -13,6 +14,7 @@ import com.equiel1703.ponte.exceptions.InvalidOperationIdException;
 import com.equiel1703.ponte.exceptions.InvalidPayloadSizeException;
 import com.equiel1703.ponte.exceptions.MagicNumberException;
 import com.equiel1703.ponte.exceptions.ProtocolVersionMismatchException;
+import com.equiel1703.ponte.net.protocol.PonteOperation;
 import com.equiel1703.ponte.net.protocol.PontePacket;
 import com.equiel1703.ponte.singletons.AppState;
 
@@ -49,9 +51,11 @@ public class PonteServer implements Runnable {
 
             // This loop will keep the server looking for new clients
             while (running) {
-                // Inner try-with-resources to manage the client Socket and it's DataInputStream
+                // Inner try-with-resources to manage the client Socket and it's 
+                // DataInputStream and DataOutputStream lifecycles
                 try (Socket cli = srv.accept();
-                    DataInputStream in = new DataInputStream(cli.getInputStream()))
+                    DataInputStream in = new DataInputStream(cli.getInputStream());
+                    DataOutputStream out = new DataOutputStream(cli.getOutputStream()))
                 {
                     this.clientSocket = cli;
                     System.out.printf("[PonteServer] Client connected: %s:%d%n", cli.getInetAddress().toString(), cli.getPort());
@@ -107,6 +111,14 @@ public class PonteServer implements Runnable {
         System.err.println("[PonteServer] Something bad happened! Stopping server...");
         System.err.println("[PonteServer] ERROR: " + e.getMessage());
         e.printStackTrace();
+    }
+
+    private void clientHandshake(DataInputStream in, DataOutputStream out) throws IOException {
+        // First we ask the client to for it's capabilities
+        PontePacket.writePacketToStream(out, new PontePacket(PonteOperation.OP_REQ_SYSINFO));
+
+        // Then we wait for the client to send it's capabilities
+        PontePacket packet = PontePacket.readPacketFromStream(in);
     }
 
     // Called by other threads to make the server stop

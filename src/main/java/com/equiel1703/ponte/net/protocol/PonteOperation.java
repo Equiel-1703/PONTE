@@ -6,9 +6,9 @@ import java.util.Optional;
 public enum PonteOperation {
     OP_REQ_SYSINFO((byte)0x01),
     OP_RES_SYSINFO((byte)0x02),
-    OP_BIND_SERVICE((byte)0x10),
-    OP_BIND_ACK((byte)0x11),
-    OP_CHANGE_PROTOCOL((byte)0x20),
+    OP_REQ_BIND_SERVICE((byte)0x10),
+    OP_RES_BIND_SERVICE((byte)0x11),
+    OP_ACK_BIND_SERVICE((byte)0x12),
     OP_ERROR((byte)0xFF);
 
     public static final int SIZE_BYTES = Byte.BYTES;
